@@ -1,38 +1,47 @@
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 
-var term = new Terminal();
-const fitAddon = new FitAddon();
-term.loadAddon(fitAddon);
+const handleEnterKey = (term) => {
+  term.write("\r\n"); // Move to the next line
+  if (inputBuffer === "exit") {
+    console.log("exit");
+    term.write("Goodbye!\r\n");
+    window.location.href = "https://www.ecosia.org";
+    // term.dispose();
+  } else {
+    term.write(`Echo: ${inputBuffer}\r\n`);
+  }
 
-term.open(document.getElementById("terminal"));
-term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+  term.write("\r\n"); // Move to the next line
+  term.write("$ "); // Print the prompt
+};
 
-// Fit the terminal to the dimensions of its parent
-fitAddon.fit();
+const initTerminal = () => {
+  const term = new Terminal();
+  const fitAddon = new FitAddon();
+  term.loadAddon(fitAddon);
 
-// Resize the terminal when the window is resized
-window.addEventListener("resize", () => {
+  term.open(document.getElementById("terminal"));
+  term.write("Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ");
+
+  // Fit the terminal to the dimensions of its parent
   fitAddon.fit();
-});
+
+  // Resize the terminal when the window is resized
+  window.addEventListener("resize", () => {
+    fitAddon.fit();
+  });
+
+  return term;
+};
+
+const term = initTerminal();
 
 let inputBuffer = "";
 term.onData((data) => {
   // Handle Enter key press
   if (data === "\r" || data === "\n") {
-    // Handle the command
-    term.write("\r\n"); // Move to the next line
-    if (inputBuffer === "exit") {
-      console.log("exit");
-      term.write("Goodbye!\r\n");
-      window.location.href = "https://www.ecosia.org";
-      // term.dispose();
-    } else {
-      term.write("You typed: " + inputBuffer + "\r\n");
-    }
-
-    term.write("\r\n"); // Move to the next line
-    term.write("$ "); // Print the prompt
+    handleEnterKey(term);
     // Clear the buffer
     inputBuffer = "";
   } else {
