@@ -10,8 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Jose E. Chavez",
-  "license": "ISC",
+  "author": "Jose",
+  "license": "MIT",
   "devDependencies": {
     "parcel": "^2.13.3"
   }
