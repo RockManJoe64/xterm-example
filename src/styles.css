@@ -1,17 +1,23 @@
+body {
+    background-color: black;
+    color: white;
+    height: 100%;
+}
+
 h1 {
     color: green;
     font-family: monospace;
     margin: 0 1em 0 1em;
 }
 
-body {
-    background-color: black;
-    color: white;
+html {
+    height: 80%;
 }
 
 #terminal {
-    padding: 1em;
     border: 1px solid white;
     border-radius: 5px;
+    height: 100%;
     margin: 1em;
+    padding: 1em;
 }
